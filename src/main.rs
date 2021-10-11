@@ -57,7 +57,9 @@ fn main() {
             CLIENT
                 .get(format!(
                     "{}?WID={}&IS_TWZC=1&CURR_LOCATION={}&JRSKMYS=1&IS_HAS_JKQK=1&JZRJRSKMYS=1",
-                    URL_INFO_APPLY, clock_in_info["WID"], location
+                    URL_INFO_APPLY,
+                    clock_in_info["WID"].as_str().unwrap(),
+                    location
                 ))
                 .send()
                 .unwrap();

@@ -29,7 +29,7 @@ impl Push {
     pub fn err(self) {
         if let Some(key) = self.send_key {
             CLIENT
-                .post(format!("{}{}.send", URL_PUSH, key))
+                .post(format!("{}/{}.send", URL_PUSH, key))
                 .form(&Self::map(
                     "今日打卡失败".to_string(),
                     r#"请自行前往APP手动打卡或重新触发Github Actions"#.to_string(),

@@ -8,7 +8,7 @@ on:
     - cron: '0 10 * * *'
   push:
     branches:
-      - master
+      - main
   pull_request:
   
 
@@ -79,6 +79,7 @@ jobs:
           args: -- -D warnings
   
   build:
+    name: Build Suite
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
