@@ -1,6 +1,6 @@
 <p align = "center">
     <img width = "100px" src = "imgs/nju.svg" align = "center" alt = "南京大学健康打卡" />
-    <h2 align = "center">南京大学健康打卡</h2>
+    <p align = "center" style = "font-size: 26px">南京大学健康打卡</p>
 </p>
 
 <p align = "center">
