@@ -1,6 +1,6 @@
 <p align = "center">
     <img width = "100px" src = "imgs/nju.svg" align = "center" alt = "南京大学健康打卡" />
-    <p align = "center" style = "font-size: 26px">南京大学健康打卡</p>
+    <h3 align= "center">南京大学健康打卡</h3>
 </p>
 
 <p align = "center">
@@ -26,7 +26,7 @@
 
 ![创建密钥](imgs/1.png)
 
-3. 分别添加如下 `NAME`: `VALUE`
+3. 分别添加3个secret，如下 `Name`: `Value`
 
     * `USERNAME`: 统一认证账号
     * `PASSWORD`: 统一认证密码
@@ -36,9 +36,9 @@
 
 
 ## 打卡状态微信通知
-1. 点击[Server酱](https://sct.ftqq.com/login)，微信扫码登录后关注
+1. 点击[Server酱](https://sct.ftqq.com/login)，微信扫码登录后关注，并在网页上点此继续
 
-2. 网页点击按钮继续，并获取[SENDKEY](https://sct.ftqq.com/sendkey)
+2. 获取[SENDKEY](https://sct.ftqq.com/sendkey)
 
 3. 按[使用](#使用)步骤2、3将SENDKEY添加进密钥中
 
