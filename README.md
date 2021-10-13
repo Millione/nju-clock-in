@@ -24,7 +24,7 @@
 
 2. 点击 Settings -> Secrets -> New repository secret
 
-![创建密钥](imgs/1.png)
+![创建密钥](imgs/setup.png)
 
 3. 分别添加3个secret，如下 `Name`: `Value`
 
@@ -43,6 +43,16 @@
 3. 按[使用](#使用)步骤2、3将SENDKEY添加进密钥中
 
     * `SENDKEY`: 网页获取值
+
+
+## 打卡时间修改
+1. 修改`.github/workflows/main.yml`中如下参数
+
+![修改打卡时间](imgs/cron.png)
+
+2. 10表示UTC时间10:00，对应北京时间18:00，修改此值即可修改打卡时间
+
+3. 如若有复杂的定时需求，可自行查阅[cron](https://www.gairuo.com/p/cron-expression-sheet)规则进行相应修改
 
 
 ---
