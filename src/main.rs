@@ -33,7 +33,12 @@ fn main() {
     let password = env::var("PASSWORD")
         .expect("please add secret PASSWORD follow the instructions in README.md");
     let resp = Auth::new(username, password).login();
-    let push = Push::new(env::var("SENDKEY").ok());
+
+    let push = Push::new(
+        env::var("SENDKEY")
+            .expect("please add secret SENDKEY follow the instructions in README.md"),
+    );
+
     if resp.url().as_str() == URL_AUTH {
         error!("login in failed, maybe caused by password error or network bad, please try again");
         push.err();

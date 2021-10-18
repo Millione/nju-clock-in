@@ -20,29 +20,24 @@
 
 
 ## 使用
-1. Fork 本仓库
+1. Star & Fork 本仓库
 
-2. 点击 Settings -> Secrets -> New repository secret
+2. 点击[Server酱](https://sct.ftqq.com/login)扫码关注，并在网页上点此继续
+
+3. 点击获取[SENDKEY](https://sct.ftqq.com/sendkey)
+
+4. 在 Fork 出来的个人仓库中点击 Settings -> Secrets -> New repository secret
 
 ![创建密钥](imgs/setup.png)
 
-3. 分别添加3个secret，如下 `Name`: `Value`
+5. 分别添加 4 个 secret，如下 `Name`: `Value`
 
     * `USERNAME`: 统一认证账号
     * `PASSWORD`: 统一认证密码
     * `LOCATION`: 打卡位置
-
-4. 完成，打卡将在每日北京时间18:00开始
-
-
-## 打卡状态微信通知
-1. 点击[Server酱](https://sct.ftqq.com/login)，微信扫码登录后关注，并在网页上点此继续
-
-2. 获取[SENDKEY](https://sct.ftqq.com/sendkey)
-
-3. 按[使用](#使用)步骤2、3将SENDKEY添加进密钥中
-
     * `SENDKEY`: 网页获取值
+
+6. 完成，打卡将在每日北京时间18:00开始
 
 
 ## 打卡时间修改
