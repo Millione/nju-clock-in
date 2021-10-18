@@ -8,7 +8,7 @@ use std::collections::HashMap;
 
 type Aes128Cbc = Cbc<Aes128, Pkcs7>;
 
-const URL_AUTH: &str = "https://authserver.nju.edu.cn/authserver/login";
+pub const URL_AUTH: &str = "https://authserver.nju.edu.cn/authserver/login";
 const AES_BLOCK_SIZE: usize = 128;
 
 pub struct Auth {

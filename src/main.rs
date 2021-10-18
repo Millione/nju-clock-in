@@ -1,4 +1,4 @@
-use crate::auth::Auth;
+use crate::auth::{Auth, URL_AUTH};
 use crate::push::Push;
 use lazy_static::lazy_static;
 use log::{error, info, warn};
@@ -12,7 +12,7 @@ mod auth;
 mod push;
 
 lazy_static! {
-    pub static ref CLIENT: Client = ClientBuilder::new()
+    static ref CLIENT: Client = ClientBuilder::new()
         .user_agent("Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0")
         .cookie_store(true)
         .build()
@@ -34,7 +34,7 @@ fn main() {
         .expect("please add secret PASSWORD follow the instructions in README.md");
     let resp = Auth::new(username, password).login();
     let push = Push::new(env::var("SENDKEY").ok());
-    if resp.status() != 200 {
+    if resp.url().as_str() == URL_AUTH {
         error!("login in failed, maybe caused by password error or network bad, please try again");
         push.err();
         return;
@@ -45,7 +45,7 @@ fn main() {
         info!("try to clock in, times: {}", i);
         let resp = CLIENT.get(URL_INFO_LIST).send().unwrap();
         if resp.status() != 200 {
-            warn!("get clokck in info-list failed");
+            warn!("get clock in info-list failed");
             sleep(Duration::from_secs(5));
             continue;
         }
