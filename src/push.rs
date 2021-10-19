@@ -29,7 +29,7 @@ impl Push {
             .post(format!("{}/{}.send", URL_PUSH, self.send_key))
             .form(&Self::map(
                 "今日打卡失败".to_string(),
-                r#"请自行前往APP手动打卡或重新触发Github Actions"#.to_string(),
+                r#"请自行前往APP手动打卡并手动进行统一身份认证"#.to_string(),
             ))
             .send()
             .unwrap();
