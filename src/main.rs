@@ -28,19 +28,13 @@ fn main() {
     env_logger::init();
 
     info!("try to login in");
-    let username = env::var("USERNAME")
-        .expect("please add secret USERNAME follow the instructions in README.md");
-    let password = env::var("PASSWORD")
-        .expect("please add secret PASSWORD follow the instructions in README.md");
+    let username = env::var("USERNAME").unwrap();
+    let password = env::var("PASSWORD").unwrap();
     let resp = Auth::new(username, password).login();
 
-    let push = Push::new(
-        env::var("SENDKEY")
-            .expect("please add secret SENDKEY follow the instructions in README.md"),
-    );
-
+    let push = Push::new(env::var("SENDKEY").unwrap());
     if resp.url().as_str() == URL_AUTH {
-        error!("login in failed, maybe caused by password error or network bad, please try again");
+        error!("login in failed, maybe caused by password error or network bad, please check and try again");
         push.err();
         return;
     }
@@ -54,11 +48,16 @@ fn main() {
             sleep(Duration::from_secs(5));
             continue;
         }
-        let value: Value = serde_json::from_str(&resp.text().unwrap()).unwrap();
+        let value: Value = match serde_json::from_str(&resp.text().unwrap()) {
+            Ok(v) => v,
+            Err(e) => {
+                error!("resp.text: {}", e.to_string());
+                break;
+            }
+        };
         let clock_in_info = &value["data"][0];
         if clock_in_info["TBZT"] == "0" {
-            let location = env::var("LOCATION")
-                .expect("please add secret LOCATION follow the instructions in README.md");
+            let location = env::var("LOCATION").unwrap();
             CLIENT
                 .get(format!(
                     "{}?WID={}&IS_TWZC=1&CURR_LOCATION={}&JRSKMYS=1&IS_HAS_JKQK=1&JZRJRSKMYS=1",
