@@ -5,7 +5,7 @@ name: Clock in
 on:
   workflow_dispatch:
   schedule:
-    - cron: '45 16 * * *'
+    - cron: '0 17 * * *'
   push:
     branches:
       - main
