@@ -40,7 +40,31 @@
 
 ![workflows](imgs/workflows.png)
 
-6. 完成，打卡将在每日北京时间18:00开始
+6. 完成，打卡将在每日北京时间18:00开始，视网络情况会有一定延迟
+
+
+## 最近一次核酸检测时间说明
+本项目共提供如下3种方案:
+
+1. 总是今天，需要修改`.github/workflows/main.yml`中`ALWAYS_TODAY`的值为`true`，默认值为`false`。
+
+2. 指定时间，需要按格式修改`.github/workflows/main.yml`中`PCR_TIME`的值，格式为`YYYY-MM-DD`，默认值为`2022-04-04`。
+
+3. 自动推导，根据常态化核酸检测时间的规律按学号尾数进行推理。
+
+可根据需要自行选择，但推荐第3种方案，也是本项目的默认方案。值得说明的是，如若选择第2种方案，项目会从指定日期和第3种方案中的推导时间中选择**最近的**作为核酸检测时间，因而不用担心忘记更新指定时间。
+
+
+## 注意事项
+1. 当打卡失败时请点击[统一身份认证](https://authserver.nju.edu.cn/authserver/login)进行手动认证（保证模拟登录时不需要验证码），并可按如下步骤再次尝试打卡。
+
+![workflow](imgs/run.png)
+
+2. 项目更新时如若没有学习过 git，建议删除掉原 Fork 出来的仓库，重新按[使用](#使用)中的步骤进行配置，这也被证实是最省事的方法。如若学过 git 或者爱捣鼓，欢迎以各种姿势自行更新。
+
+3. 想要暂停掉自动打卡有两种方法，一种方法是在`.github/workflows/main.yml`中将`DISABLE_CLOCK_IN`的值改为`true`，默认值为`false`，另一种方法是在仓库页面点击 Actions -> Clock in -> Disable workflow。
+
+![disable](imgs/disable.png)
 
 
 ## 微信打卡通知
@@ -55,12 +79,6 @@
    * `SENDKEY`: 步骤2获取值
 
 
-## 注意
-当打卡失败时请点击[统一身份认证](https://authserver.nju.edu.cn/authserver/login)进行手动认证（保证模拟登录时不需要验证码），并可按如下步骤再次尝试打卡
-
-![workflow](imgs/run.png)
-
-
 ## 打卡时间修改
 1. 修改`.github/workflows/main.yml`中如下参数
 
@@ -69,6 +87,10 @@
 2. 10表示UTC时间10:00，对应北京时间18:00，修改此值即可修改打卡时间
 
 3. 如若有复杂的定时需求，可自行查阅[cron](https://www.gairuo.com/p/cron-expression-sheet)规则进行相应修改
+
+
+## 更新日志
+2022-04-11 新增最近14天是否离宁以及最近一次核酸检测时间
 
 
 ---

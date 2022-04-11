@@ -5,12 +5,11 @@ name: Clock in
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 10 * * *'
+    - cron: "0 10 * * *"
   push:
     branches:
       - main
   pull_request:
-  
 
 jobs:
   check:
@@ -77,7 +76,7 @@ jobs:
         with:
           command: clippy
           args: -- -D warnings
-  
+
   build:
     name: Build Suite
     runs-on: ubuntu-latest
@@ -93,7 +92,7 @@ jobs:
           override: true
 
       - name: Build
-        run: cargo build --all --release 
+        run: cargo build --all --release
 
       - name: Run
         env:
@@ -102,5 +101,7 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
           LOCATION: ${{ secrets.LOCATION }}
           SENDKEY: ${{ secrets.SENDKEY }}
-        run:
-          target/release/nju-clock-in
+          PCR_TIME: 2022-04-04
+          ALWAYS_TODAY: false
+          DISABLE_CLOCK_IN: false
+        run: target/release/nju-clock-in
