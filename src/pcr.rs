@@ -28,7 +28,7 @@ impl Pcr {
         let input_time = DateTime::<Utc>::from_utc(
             NaiveDateTime::new(
                 NaiveDate::parse_from_str(&self.input_time, "%Y-%m-%d")
-                    .unwrap_or(NaiveDate::from_ymd(2022, 4, 4)),
+                    .unwrap_or_else(|_| NaiveDate::from_ymd(2022, 4, 4)),
                 NaiveTime::from_hms(0, 0, 0),
             ),
             Utc,
@@ -71,6 +71,7 @@ mod tests {
 
     #[test]
     fn test_calc() {
+        std::env::set_var("ALWAYS_TODAY", "false");
         let pcr = Pcr::new("MF1923044".to_string(), "2022-04-10".to_string());
         println!("{}", pcr.calc());
     }
