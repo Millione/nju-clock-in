@@ -54,7 +54,7 @@ impl Pcr {
         )
         .with_timezone(&FixedOffset::east(8 * 60 * 60));
 
-        match env::var("ALWAYS_TODAY").unwrap().as_ref() {
+        match std::env::var("ALWAYS_TODAY").unwrap().as_ref() {
             "false" => pcr_time.format("%Y-%m-%d-10").to_string(),
             _ => now_time
                 .with_timezone(&FixedOffset::east(8 * 60 * 60))
