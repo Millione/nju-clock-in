@@ -1,6 +1,8 @@
 use chrono::{DateTime, FixedOffset, NaiveDate, NaiveDateTime, NaiveTime, TimeZone, Utc};
 
+const DATE_FORMAT: &str = "%Y-%m-%d 10";
 const DAY_SECONDS: i64 = 24 * 60 * 60;
+const CHINA_OFFSET: i32 = 8 * 60 * 60;
 const CYCLE: i64 = 5;
 
 pub struct Pcr {
@@ -52,13 +54,13 @@ impl Pcr {
             ),
             Utc,
         )
-        .with_timezone(&FixedOffset::east(8 * 60 * 60));
+        .with_timezone(&FixedOffset::east(CHINA_OFFSET));
 
         match std::env::var("ALWAYS_TODAY").unwrap().as_ref() {
-            "false" => pcr_time.format("%Y-%m-%d-10").to_string(),
+            "false" => pcr_time.format(DATE_FORMAT).to_string(),
             _ => now_time
-                .with_timezone(&FixedOffset::east(8 * 60 * 60))
-                .format("%Y-%m-%d-10")
+                .with_timezone(&FixedOffset::east(CHINA_OFFSET))
+                .format(DATE_FORMAT)
                 .to_string(),
         }
     }
