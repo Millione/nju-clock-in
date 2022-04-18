@@ -19,13 +19,14 @@ impl Pcr {
     }
 
     pub fn calc(&self) -> String {
-        let mut last_number = self.username.chars().last().unwrap().to_digit(10).unwrap() as i64;
-        last_number = match last_number {
-            1..=5 => last_number,
-            6..=9 => last_number - 5,
-            0 => last_number + 5,
-            _ => unreachable!(),
-        };
+        let last_number = self.get_last_number();
+
+        let now_time = Utc::now();
+        let begin_time = Utc.ymd(2022, 4, 3).and_hms(16, 0, 0);
+        let timestamp = now_time.timestamp() - begin_time.timestamp();
+
+        let pcr_number = ((timestamp / DAY_SECONDS) % CYCLE) + 1;
+        let interval = (pcr_number - last_number + CYCLE) % CYCLE;
 
         let input_time = DateTime::<Utc>::from_utc(
             NaiveDateTime::new(
@@ -35,12 +36,6 @@ impl Pcr {
             ),
             Utc,
         );
-
-        let now_time = Utc::now();
-        let timestamp = now_time.timestamp() - Utc.ymd(2022, 4, 3).and_hms(16, 0, 0).timestamp();
-        let pcr_number = ((timestamp / DAY_SECONDS) % CYCLE) + 1;
-        let interval = (pcr_number - last_number + CYCLE) % CYCLE;
-
         let pcr_time = DateTime::<Utc>::from_utc(
             NaiveDateTime::from_timestamp(
                 std::cmp::max(
@@ -62,6 +57,16 @@ impl Pcr {
                 .with_timezone(&FixedOffset::east(CHINA_OFFSET))
                 .format(DATE_FORMAT)
                 .to_string(),
+        }
+    }
+
+    fn get_last_number(&self) -> i64 {
+        let last_number = self.username.chars().last().unwrap().to_digit(10).unwrap() as i64;
+        match last_number {
+            1..=5 => last_number,
+            6..=9 => last_number - 5,
+            0 => last_number + 5,
+            _ => unreachable!(),
         }
     }
 }

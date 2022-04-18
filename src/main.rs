@@ -1,4 +1,4 @@
-use crate::auth::{Auth, URL_AUTH};
+use crate::auth::Auth;
 use crate::pcr::Pcr;
 use crate::push::Push;
 use lazy_static::lazy_static;
@@ -40,13 +40,12 @@ fn main() {
     info!("try to login in");
     let username = env::var("USERNAME").unwrap();
     let password = env::var("PASSWORD").unwrap();
-    let resp = Auth::new(username.clone(), password).login();
+    let login = Auth::new(username.clone(), password).login();
 
     let push = Push::new(env::var("SENDKEY").unwrap());
-    if resp.url().as_str() == URL_AUTH {
-        error!("login in failed, maybe caused by password error or network bad, please check and try again");
+    if !login {
         push.err();
-        return;
+        panic!("login in failed, maybe caused by password error or captcha missed, please check and try again");
     }
     info!("login in successfully");
 

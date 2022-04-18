@@ -16,6 +16,9 @@ jobs:
     name: Check
     runs-on: ubuntu-latest
     steps:
+      - name: Install tesseract
+        run: sudo apt-get install libleptonica-dev libtesseract-dev clang tesseract-ocr-eng
+
       - name: Checkout sources
         uses: actions/checkout@v2
 
@@ -35,6 +38,9 @@ jobs:
     name: Test Suite
     runs-on: ubuntu-latest
     steps:
+      - name: Install tesseract
+        run: sudo apt-get install libleptonica-dev libtesseract-dev clang tesseract-ocr-eng
+
       - name: Checkout sources
         uses: actions/checkout@v2
 
@@ -54,6 +60,9 @@ jobs:
     name: Lints
     runs-on: ubuntu-latest
     steps:
+      - name: Install tesseract
+        run: sudo apt-get install libleptonica-dev libtesseract-dev clang tesseract-ocr-eng
+
       - name: Checkout sources
         uses: actions/checkout@v2
 
@@ -81,6 +90,9 @@ jobs:
     name: Build Suite
     runs-on: ubuntu-latest
     steps:
+      - name: Install tesseract
+        run: sudo apt-get install libleptonica-dev libtesseract-dev clang tesseract-ocr-eng
+
       - name: Checkout sources
         uses: actions/checkout@v2
 
