@@ -5,6 +5,7 @@ use lazy_static::lazy_static;
 use log::{error, info, warn};
 use rand::Rng;
 use reqwest::blocking::{Client, ClientBuilder};
+use reqwest::header::HeaderMap;
 use serde_json::Value;
 use std::env;
 use std::thread::sleep;
@@ -34,6 +35,7 @@ const URL_INFO_LIST: &str =
     "http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do";
 const URL_INFO_APPLY: &str =
     "http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/saveApplyInfos.do";
+const URL_REF_INDEX: &str = "http://ehallapp.nju.edu.cn/xgfw/sys/mrjkdkappnju/index.html";
 
 fn main() {
     match env::var("DISABLE_CLOCK_IN").unwrap().as_str() {
@@ -78,6 +80,9 @@ fn main() {
             }
         };
         let clock_in_info = &value["data"][0];
+        let mut headers = HeaderMap::new();
+        headers.insert("Referer", URL_REF_INDEX);
+
         if clock_in_info["TBZT"] == "0" {
             CLIENT
                 .get(format!(
@@ -87,6 +92,7 @@ fn main() {
                     location,
                     pcr_time
                 ))
+                .headers(headers)
                 .send()
                 .unwrap();
             sleep(Duration::from_secs(1));

@@ -1,6 +1,6 @@
 use chrono::{DateTime, FixedOffset, NaiveDate, NaiveDateTime, NaiveTime, TimeZone, Utc};
 
-const DATE_FORMAT: &str = "%Y-%m-%d 10";
+const DATE_FORMAT: &str = "%Y-%m-%d+10";
 const DAY_SECONDS: i64 = 24 * 60 * 60;
 const CHINA_OFFSET: i32 = 8 * 60 * 60;
 const CYCLE: i64 = 5;
