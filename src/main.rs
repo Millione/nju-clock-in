@@ -5,7 +5,7 @@ use lazy_static::lazy_static;
 use log::{error, info, warn};
 use rand::Rng;
 use reqwest::blocking::{Client, ClientBuilder};
-use reqwest::header::HeaderMap;
+use reqwest::header::{HeaderMap, REFERER};
 use serde_json::Value;
 use std::env;
 use std::thread::sleep;
@@ -23,12 +23,12 @@ lazy_static! {
         .unwrap();
 }
 
-const USER_AGENT:[&str; 6] = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
-                              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36",
-                              "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0",
-                              "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:95.0) Gecko/20100101 Firefox/95.0",
-                              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36", 
-                              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36"
+const USER_AGENT:[&str; 6] = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36 cpdaily/9.0.14 wisedu/9.0.14",
+                              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 cpdaily/9.0.14 wisedu/9.0.14",
+                              "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0 cpdaily/9.0.14 wisedu/9.0.14",
+                              "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:95.0) Gecko/20100101 Firefox/95.0 cpdaily/9.0.14 wisedu/9.0.14",
+                              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36 cpdaily/9.0.14 wisedu/9.0.14", 
+                              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 cpdaily/9.0.14 wisedu/9.0.14"
                               ];
 
 const URL_INFO_LIST: &str =
@@ -81,7 +81,7 @@ fn main() {
         };
         let clock_in_info = &value["data"][0];
         let mut headers = HeaderMap::new();
-        headers.insert("Referer", URL_REF_INDEX);
+        headers.insert(REFERER, URL_REF_INDEX.parse().unwrap());
 
         if clock_in_info["TBZT"] == "0" {
             CLIENT
