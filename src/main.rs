@@ -64,9 +64,16 @@ fn main() {
 
     let pcr_time = Pcr::new(username, env::var("PCR_TIME").unwrap()).calc();
 
+    let mut headers = HeaderMap::new();
+    headers.insert(REFERER, URL_REF_INDEX.parse().unwrap());
+
     for i in 1..=3 {
         info!("try to clock in, times: {}", i);
-        let resp = CLIENT.get(URL_INFO_LIST).send().unwrap();
+        let resp = CLIENT
+            .get(URL_INFO_LIST)
+            .headers(headers.clone())
+            .send()
+            .unwrap();
         if resp.status() != 200 {
             warn!("get clock in info-list failed");
             sleep(Duration::from_secs(5));
@@ -80,8 +87,6 @@ fn main() {
             }
         };
         let clock_in_info = &value["data"][0];
-        let mut headers = HeaderMap::new();
-        headers.insert(REFERER, URL_REF_INDEX.parse().unwrap());
 
         if clock_in_info["TBZT"] == "0" {
             CLIENT
@@ -92,7 +97,7 @@ fn main() {
                     location,
                     pcr_time
                 ))
-                .headers(headers)
+                .headers(headers.clone())
                 .send()
                 .unwrap();
             sleep(Duration::from_secs(1));
