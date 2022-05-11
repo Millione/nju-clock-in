@@ -20,7 +20,9 @@
 
 
 ## 更新日志
-2022-04-21 新增Referer请求头
+2022-5-11 新增Referer请求头获取getApplyInfoList
+
+2022-04-21 新增Referer请求头保存saveApplyInfos
 
 2022-04-18 新增OCR登录验证码识别
 
