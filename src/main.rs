@@ -5,7 +5,7 @@ use lazy_static::lazy_static;
 use log::{error, info, warn};
 use rand::Rng;
 use reqwest::blocking::{Client, ClientBuilder};
-use reqwest::header::{HeaderMap, REFERER};
+use reqwest::header::{HeaderMap, HOST, REFERER};
 use serde_json::Value;
 use std::env;
 use std::thread::sleep;
@@ -35,7 +35,8 @@ const URL_INFO_LIST: &str =
     "http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do";
 const URL_INFO_APPLY: &str =
     "http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/saveApplyInfos.do";
-const URL_REF_INDEX: &str = "http://ehallapp.nju.edu.cn/xgfw/sys/mrjkdkappnju/index.html";
+const URL_REF_HTML: &str = "http://ehallapp.nju.edu.cn/xgfw/sys/mrjkdkappnju/index.html";
+const URL_REF_DO: &str = "http://ehallapp.nju.edu.cn/xgfw/sys/mrjkdkappnju/index.do";
 
 fn main() {
     match env::var("DISABLE_CLOCK_IN").unwrap().as_str() {
@@ -65,10 +66,12 @@ fn main() {
     let pcr_time = Pcr::new(username, env::var("PCR_TIME").unwrap()).calc();
 
     let mut headers = HeaderMap::new();
-    headers.insert(REFERER, URL_REF_INDEX.parse().unwrap());
+    headers.insert(REFERER, URL_REF_HTML.parse().unwrap());
+    headers.insert(HOST, "ehallapp.nju.edu.cn".parse().unwrap());
 
     for i in 1..=3 {
         info!("try to clock in, times: {}", i);
+        CLIENT.get(URL_REF_DO).send().unwrap();
         let resp = CLIENT
             .get(URL_INFO_LIST)
             .headers(headers.clone())
