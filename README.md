@@ -20,7 +20,9 @@
 
 
 ## 更新日志
-2022-5-11 新增Referer请求头获取getApplyInfoList
+**2022-06-16 此项目不再维护，预祝大家毕业快乐！**
+
+2022-05-11 新增Cookie
 
 2022-04-21 新增Referer请求头保存saveApplyInfos
 
